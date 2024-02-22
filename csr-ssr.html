@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>HTML 예시</title>
+</head>
+<body class="p-2">
+<h3>로컬에서 파일로 불러온 정적 HTML 페이지입니다.</h3>
+<br>
+<h3><span class="font-bold">아래 위치</span>에서 정적 HTML 파일을 불러와 보여줍니다.</h3>
+<p><span class="font-bold">경로: </span><span id="url"></span></p>
+<br>
+<div id="root" class="m-4 p-4 border rounded-md">
+    <div class="flex flex-wrap gap-2">
+        <a class="p-2 bg-teal-300 rounded-md text-lg font-bold" href="file:///C:/study/ssr-csr/static-page.html">이전 정적 페이지로 이동</a>
+    </div>
+</div>
+<div id="content" class="m-4 p-4 border rounded-md">
+    <div class="text-lg font-bold">MPA vs SPA 라이프사이클 비교</div>
+    <div class="flex flex-wrap gap-2">
+        <img class="my-2 mr-4 p-4 max-w-full" src="./images/spa-mpa-lifecycle.jpg" alt="MPA VS SPA lifecycle" />
+        <div class="flex flex-col gap-2">
+            <table class="border">
+                <tr>
+                    <td class="px-2 max-w-full border">장점</td>
+                    <td class="max-w-full border">
+                        <p>최초 페이지 진입이 비교적 빠름</p>
+                        <p>검색 엔진과 SNS 공유 등 메타데이터 제공 용이</p>
+                        <p>일부 요소의 뒤늦은 랜더링으로 인한 누적 레이아웃 이동 현상 적음</p>
+                        <p>사용자 기기 성능에 비교적 자유로움</p>
+                        <p>보안에 좀 더 안전*</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-2 max-w-full border">단점</td>
+                    <td class="max-w-full border">
+                        <p>소스코드 작성 시 항상 서버에서 실행될 수 없는 코드 배제 필요</p>
+                        <p>적절한 서버 구축(이게 어려움)</p>
+                        <p>서비스 지연 시 어떤 내용도 확인 불가(통신환경 의존도 높음)</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="px-2 max-w-full border">예시</td><td class="max-w-full border">W3Schools, Wikipedia, 네이버 뉴스, 서버사이드 랜더링 프레임워크(Next.JS, Nuxt.JS)</td>
+                </tr>
+            </table>
+            <table class="border">
+                <tr>
+                    <td class="px-2 max-w-full border">장점</td><td class="max-w-full border"></td>
+                </tr>
+                <tr>
+                    <td class="px-2 max-w-full border">단점</td><td class="max-w-full border">기기성능에 좌우</td>
+                </tr>
+                <tr>
+                    <td class="px-2 max-w-full border">예시</td><td class="max-w-full border">Gmail, Facebook, Twitter, SPA 기반 웹애플리케이션(React.JS, Vue.JS)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="p-4 flex flex-wrap gap-2">
+    <div>
+        <div class="text-lg font-bold">React.JS - SPA</div>
+        <img class="my-4 mr-4 p-4 max-w-[800px]" src="./images/spa_render.png" alt="React.JS SPA render" />
+        <h2 class="text-lg font-bold">CSR 방식에 전적으로 위임</h2>
+        <h2 class="my-2">서버에서 첫 정적 페이지(index.html)를 인식 및 적용(이후부터 웹서버로 HTML 재호출 없음)
+            <br>→ style 태그에서 CSS, script 태그에서 JS 번들파일 인식<br>→ JS 실행해 브라우저에서 1차 랜더링<br>→ 데이터 패치 요청 또는 사용자 행동 감지<br>
+            <button onclick="toggleVDomImage()">→ <span class="hover:underline hover:font-semibold">변경된 가상 DOM으로 교체</span>(패턴 반복)</button>
+            <img id="vDomDiv" class="my-4 mr-4 p-4 max-w-[880px] hidden" src="./images/react-virtual-dom.png"  alt="출처: 개발자 시니(티스토리) - React] 가상동 Virtual DOM이란?"/>
+        </h2>
+        <p class="my-2 font-semibold text-sm">* 리액트는 자체 라우팅 기능이 없어, React Router Dom으로 라우팅 기능을 구현할 수 있다.</p>
+        <p class="my-2 ml-2 font-semibold text-sm">파일 기반 라우팅과 무관하고, JS에서 URL을 판단해 index.html의 root div 내용을 동적으로 변경하는 데 활용</p>
+    </div>
+    <div>
+        <h2 class="text-lg font-bold my-2">Next.JS - MPA</h2>
+        <img class="my-2 mr-4 p-4 max-w-[960px]" src="./images/nextjs_render.png" alt="Next.JS MPA render" />
+        <div class="text-lg font-bold">SSR과 CSR을 혼용해서 사용</div>
+        <h2 class="my-2">서버에서 파일기반 라우팅으로 매핑된 경로에서 JS 파일 인식 후 HTML 파일 생성(SSG) 및 브라우저에 전달(SSR)<br>
+            → 이후 페이지 이동 요청 시 처음부터 다시 시작(캐싱된 페이지라면 스킵)<br>
+            → 데이터 패치 요청 또는 사용자 행동 감지<br>
+            <button onclick="toggleVDomImage()">→ <span class="hover:underline hover:font-semibold">페이지 이동 상위 서버 컴포넌트에서 SSR / 하위 클라이언트 컴포넌트에서 사용자 상호작용을 위한 CSR 담당</span>(패턴 반복)</button>
+        </h2>
+    </div>
+</div>
+
+<script>
+    const url = window.location.href;
+    document.getElementById("url").innerHTML = url;
+
+    const toggleVDomImage = () => {
+        const vDomDiv = document.getElementById("vDomDiv");
+        vDomDiv.classList.contains('hidden')
+            ? vDomDiv.classList.remove('hidden')
+            : vDomDiv.classList.add('hidden');
+    }
+</script>
+</body>
+</html>

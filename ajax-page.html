@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+    <title>Ajax 예시</title>
+</head>
+<body class="p-2">
+<h3>로컬에서 파일로 불러온 Ajax가 적용된 HTML 파일 페이지입니다.</h3>
+<br>
+<h3><span class="font-bold">아래 위치</span>에서 정적 HTML 파일을 불러와 보여줍니다.</h3>
+<p><span class="font-bold">경로: </span><span id="url"></span></p>
+<br>
+<div id="ajax" class="m-4 p-4 border rounded-md">
+    <div class="flex flex-wrap gap-2">
+        <button id="btnAjax" class="p-2 bg-purple-300 rounded-md text-lg font-bold">Ajax 통신하기!</button>
+        <div class="flex flex-wrap gap-2">
+            <a class="p-2 bg-teal-300 rounded-md text-lg font-bold" href="file:///C:/study/ssr-csr/static-page.html">이전 정적 페이지로 이동</a>
+        </div>
+    </div>
+    <table id="result" class="m-2"></table>
+</div>
+<div class="my-2">
+    <p class="font-bold">Ajax(Asynchronous JavaScript and XML)</p>
+    <p>자바스크립트를 이용해 서버와 브라우저가 비동기 방식으로 데이터를 교환할 수 있는 통신기능</p>
+    <p>페이지 이동(또는 새로고침) 없이 데이터 패치 수행 가능</p>
+</div>
+<img class="my-4 mr-4 p-4 max-w-[880px]" src="./images/ajax.png" alt="ajax" />
+<p class="my-2 font-semibold">* Ajax는 이후 리액트, 뷰 등으로 만든 SPA 개발기술 등장에 지대한 영향을 미침</p>
+<p class="my-2"><span class="font-semibold">SPA(Single Page Application)</span>: 사용자의 초기 진입에 필요한 단 하나의 HTML 페이지로 구성된 웹 애플리케이션</p>
+<div class="my-2">
+    <p>단, 이 방식은 보안에 취약. 브라우저에 통신 내역이 개발자도구 네트워크 탭에 전부 노출</p>
+    <p>→ 어떤 형식으로든 <span class="font-semibold">사용자 정보가 노출될 수밖에 없는 구조</span></p>
+    <div class="p-2 text-sm">
+        <p>Q: 로그인 직후 서버로부터 API 접근에 필요한 토큰(JWT)을 받아 쿠키, 세션, 로컬 스토리지 등에 보관하는 방식은 안전한가?</p>
+        <p>A: 굳이 따지면, JWT도 사용자 정보</p>
+    </div>
+</div>
+<script>
+    const url = window.location.href;
+    document.getElementById("url").innerHTML = url;
+
+    const API_URL = "https://nomad-movies.nomadcoders.workers.dev/movies";
+    const noData = `<tr><td class="p-2">조회된 데이터가 없습니다.</td></tr>`;
+    const table = document.getElementById("result");
+    let dataPage = 0;
+
+    table.innerHTML = noData;
+
+    $('#btnAjax').click(function() {
+        $.ajax({
+            type: "GET",
+            url: API_URL,
+            dataType:"json",
+            success: function(res) {
+                let data = '';
+
+                res.slice(dataPage, dataPage + 5).forEach((e, idx) => {
+                    const tr = `
+                        <tr>
+                            <td><img class="w-[80px]" src=${e.poster_path} alt=${e.title}/></td>
+                            <td class="p-2 border w-[250px]">${e.original_title}</td>
+                            <td class="p-2 border w-[110px]">${e.release_date}</td>
+                        </tr>
+                    `;
+                    data = data + tr;
+
+                });
+
+                table.innerHTML = data.length > 0  ? data : noData;
+            }
+        });
+
+        dataPage = dataPage === 20 ? 0 : dataPage + 5;
+    });
+</script>
+</body>
+</html>
