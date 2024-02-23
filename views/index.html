@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p class="m-2 text-xl font-bold">이 페이지는 서버에서 {{title}} {{engine}}로 랜더링해 만들었습니다.</p>
+<p class="m-2 text-xl font-bold">서버사이드랜더링(SSR)입니다.</p>
+<p class="m-2 text-lg">아래는 서버에서 데이터 패칭으로 만든 동적 컨텐츠입니다.</p>
+<div class="m-4 p-4 rounded-lg border">
+    <div class="flex gap-2">
+        <div><img class="rounded-lg w-[380px]" src={{data.poster_path}} alt={{data.title}} /></div>
+        <div class="flex flex-col gap-2">
+            <table class="w-[680px]">
+                <tr>
+                    <td class="p-4 w-[100px] font-semibold">타이틀</td><td class="p-4">{{data.title}}</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-semibold">요약</td><td class="p-4">{{data.overview}}</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-semibold">배포일</td><td class="p-4">{{data.release_date}}</td>
+                </tr>
+                <tr>
+                    <td class="p-4 font-semibold">투표수</td><td class="p-4">{{data.vote_count}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="m-4 flex flex-wrap gap-2">
+    <a class="p-2 bg-teal-300 rounded-md text-lg font-bold" href="/">이전 정적 페이지로 이동</a>
+    <button class="p-2 bg-teal-300 rounded-md text-lg font-bold" onclick="location.reload()">새로고침</button>
+</div>
+{% endblock %}

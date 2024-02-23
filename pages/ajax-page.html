@@ -11,16 +11,16 @@
     <title>Ajax 예시</title>
 </head>
 <body class="p-2">
-<h3>로컬에서 파일로 불러온 Ajax가 적용된 HTML 파일 페이지입니다.</h3>
+<h3>Ajax가 적용된 동적 HTML 파일 페이지입니다.</h3>
 <br>
-<h3><span class="font-bold">아래 위치</span>에서 정적 HTML 파일을 불러와 보여줍니다.</h3>
+<h3><span class="font-bold">아래 위치</span>에서 HTML 파일을 불러와 보여줍니다.</h3>
 <p><span class="font-bold">경로: </span><span id="url"></span></p>
 <br>
 <div id="ajax" class="m-4 p-4 border rounded-md">
     <div class="flex flex-wrap gap-2">
         <button id="btnAjax" class="p-2 bg-purple-300 rounded-md text-lg font-bold">Ajax 통신하기!</button>
         <div class="flex flex-wrap gap-2">
-            <a class="p-2 bg-teal-300 rounded-md text-lg font-bold" href="file:///C:/study/ssr-csr/static-page.html">이전 정적 페이지로 이동</a>
+            <a class="p-2 bg-teal-300 rounded-md text-lg font-bold" href="/">이전 정적 페이지로 이동</a>
         </div>
     </div>
     <table id="result" class="m-2"></table>
@@ -30,7 +30,7 @@
     <p>자바스크립트를 이용해 서버와 브라우저가 비동기 방식으로 데이터를 교환할 수 있는 통신기능</p>
     <p>페이지 이동(또는 새로고침) 없이 데이터 패치 수행 가능</p>
 </div>
-<img class="my-4 mr-4 p-4 max-w-[880px]" src="./images/ajax.png" alt="ajax" />
+<img class="my-4 mr-4 p-4 max-w-[880px]" src="/images/ajax.png" alt="ajax" />
 <p class="my-2 font-semibold">* Ajax는 이후 리액트, 뷰 등으로 만든 SPA 개발기술 등장에 지대한 영향을 미침</p>
 <p class="my-2"><span class="font-semibold">SPA(Single Page Application)</span>: 사용자의 초기 진입에 필요한 단 하나의 HTML 페이지로 구성된 웹 애플리케이션</p>
 <div class="my-2">
@@ -53,6 +53,7 @@
     table.innerHTML = noData;
 
     $('#btnAjax').click(function() {
+        console.log('클라이언트에서 데이터 패칭을 진행합니다.');
         $.ajax({
             type: "GET",
             url: API_URL,
@@ -60,10 +61,10 @@
             success: function(res) {
                 let data = '';
 
-                res.slice(dataPage, dataPage + 5).forEach((e, idx) => {
+                res.slice(dataPage, dataPage + 5).forEach((e) => {
                     const tr = `
                         <tr>
-                            <td><img class="w-[80px]" src=${e.poster_path} alt=${e.title}/></td>
+                            <td class="pr-2"><img class="rounded-lg w-[80px]" src=${e.poster_path} alt=${e.title}/></td>
                             <td class="p-2 border w-[250px]">${e.original_title}</td>
                             <td class="p-2 border w-[110px]">${e.release_date}</td>
                         </tr>
@@ -75,6 +76,7 @@
                 table.innerHTML = data.length > 0  ? data : noData;
             }
         });
+        console.log('랜더링 완료');
 
         dataPage = dataPage === 20 ? 0 : dataPage + 5;
     });
