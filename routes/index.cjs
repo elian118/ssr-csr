@@ -1,5 +1,5 @@
-import express from 'express';
-import path from 'path';
+const express = require('express');
+const path = require("path");
 
 const router = express.Router();
 
@@ -27,4 +27,4 @@ router.get('/csr-ssr', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/csr-ssr.html'));
 });
 
-export default router;
+module.exports = router;

@@ -1,9 +1,9 @@
 import express from 'express';
 import morgan from 'morgan';
-import nunjucks from 'nunjucks';
 import dotenv from 'dotenv';
-import indexRouter from './routes/index.js';
-import viewRouter from './routes/view.js';
+import nunjucks from 'nunjucks';
+import indexRouter from './routes/index.cjs';
+import viewRouter from './routes/view.cjs';
 
 dotenv.config();
 const app = express();
