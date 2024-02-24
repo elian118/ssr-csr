@@ -9,8 +9,7 @@
 <body class="p-2">
 <h3>로컬에서 파일로 불러온 정적 HTML 페이지입니다.</h3>
 <br>
-<h3><span class="font-bold">아래 위치</span>에서 정적 HTML 파일을 불러와 보여줍니다.</h3>
-<p><span class="font-bold">경로: </span><span id="url"></span></p>
+<p><span class="font-bold">요청: </span><span id="url"></span></p>
 <br>
 <div id="root" class="m-4 p-4 border rounded-md">
     <div class="flex flex-wrap gap-2">
@@ -24,8 +23,8 @@
     </div>
 </div>
 <div class="w-full flex flex-row gap-2 justify-center">
-    <button id="leftBtn" class="hidden p-2 rounded-2 border" onclick="toggleVDomImage('left')"><</button>
-    <button id="rightBtn" class="p-2 rounded-2 border" onclick="toggleVDomImage('right')">></button>
+    <button id="leftBtn" class="hidden p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="toggleVDomImage('left')"><</button>
+    <button id="rightBtn" class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="toggleVDomImage('right')">></button>
 </div>
 <script>
     const url = window.location.href;
@@ -49,7 +48,7 @@
         document.getElementById("rightBtn").classList.toggle('hidden', rightHidden);
 
         // 이미지 출력
-        const imageSize = currPage === 3 ? 'w-4/5' : 'w-3/5';
+        const imageSize = currPage === 2 || currPage === 3 ? 'w-4/5' : 'w-3/5';
         const content = document.getElementById("content");
         content.innerHTML = `<img class="my-2 mr-4 p-4 ${imageSize}" src="/images/${imageNms[currPage]}" alt=${imageNms[currPage]} />`;
     }
