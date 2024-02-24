@@ -4,6 +4,7 @@
 <p class="m-2 text-xl font-bold">이 페이지는 서버에서 {{title}} {{engine}}로 랜더링해 만들었습니다.</p>
 <p class="m-2 text-xl font-bold">서버사이드랜더링(SSR)입니다.</p>
 <p class="m-2 text-lg">아래는 서버에서 데이터 패칭으로 만든 동적 컨텐츠입니다.</p>
+<p><span class="m-2 font-bold">요청: </span><span id="url"></span></p>
 <div class="m-4 p-4 rounded-lg border">
     <div class="flex gap-2">
         <div><img class="rounded-lg w-[380px]" src={{data.poster_path}} alt={{data.title}} /></div>
@@ -31,12 +32,21 @@
     <button class="p-2 bg-teal-300 rounded-md text-lg font-bold" onclick="reloadData()">새로고침</button>
 </div>
 <script>
-    const reloadData = () => {
-        let url = window.location.href;
-        url = url.includes('?') ? url.slice(0, url.indexOf('?')) : url;
-        const randomNumber = Math.floor(Math.random() * 20);
+    const url = window.location.href;
+    document.getElementById("url").innerHTML = url;
 
-        window.location.replace(`${url}?page=${randomNumber}`);
+    const reloadData = () => {
+        const url = window.location.href;
+        let randomNumber = 0;
+
+        const urlPath = url.includes('?') ? url.slice(0, url.indexOf('?')) : url;
+        const currentPage = parseInt(url.slice(url.indexOf('?') + 1).split('=')[1]);
+
+        do {
+            randomNumber = Math.floor(Math.random() * 20);
+        } while (randomNumber === currentPage);
+
+        window.location.replace(`${urlPath}?page=${randomNumber}`);
     };
 </script>
 {% endblock %}
