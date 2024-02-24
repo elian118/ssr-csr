@@ -21,6 +21,13 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// '/ajax' 요청이 아니면, 쿠키를 지운다.
+app.use((req, res, next) => {
+    const url = req.url;
+    url !== '/ajax' && res.clearCookie('apiUrl');
+    next();
+});
+
 app.use('/', indexRouter);
 app.use('/view', viewRouter);
 

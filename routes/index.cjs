@@ -12,6 +12,8 @@ router.get('/link', (req, res) => {
 });
 
 router.get('/ajax', (req, res) => {
+    const API_URI = process.env.API_URL;
+    res.setHeader('Set-Cookie', `apiUrl=${API_URI}`);
     res.sendFile(path.join(__dirname, '../pages/ajax-page.html'));
 });
 
