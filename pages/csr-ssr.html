@@ -40,17 +40,47 @@
     }
 
     const toggleVDomImage = (direction) => {
-        const imageNms = ['spa-mpa-lifecycle.jpg', 'mpa.png', 'spa.png', 'hydrate.png', 'ssr_vs_csr.png', 'dev_trend.png'];
+        const images = [
+            { main: 'spa-mpa-lifecycle.jpg' },
+            { main: 'mpa.png' },
+            {
+                main: 'spa.png',
+                sub: '<img class="my-2 mr-4 p-4 w-3/5" src="/images/react-virtual-dom.png" alt="React virtual DOM" />'
+            },
+            {
+                main: 'hydrate.png',
+                sub: '<img class="my-2 mr-4 p-4 w-2/5" src="/images/rsc.png" alt="React Server Component" />'
+            },
+            { main: 'ssr_vs_csr.png' },
+            {
+                main: 'dev_trend.png',
+                sub: `
+                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(0)">자바스크립트 상태 보고서</button>
+                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(1)">웹페이지 로딩 시간 보고서</button>
+                        <div class="w-full flex justify-center text-sm">* HTTP Archive: 사용자가 웹 페이지 성능 데이터를 검색하고 분석할 수 있는 다양한 도구와 리포트 제공</div>
+                        <div class="w-full mt-4">
+                            <p class="font-semibold">SSR은 만능일까?</p>
+                            <p>Re: 결코 아니다.</p>
+                            <p class="text-sm">- Gmail 사례 > 가장 뛰어난 MPA보다 가장 뛰어난 SPA가 더 좋다.</p>
+                            <ul class="my-2 mx-4 list-disc">
+                               <li>서비스 기획 시 랜더링 전략 결정 결정: 서비스 규모, 서비스 대상이 위치한 지역의 통신 인프라 환경, 평균 기기 성능 등 고려</li>
+                               <li>웹페이지 설계와 목적 그리고 우선순위에 따라, SPA가 더 효율적일 수 있다.(이 경우, 보통은 소규모라 SI 업체보다 프리랜서 선호)</li>
+                           </ul>
+                        </div>
+                    `
+            },
+            { main: 'epilogue.png' },
+        ];
 
         // currPage 업데이트
         currPage =
             direction === 'right'
-                ? Math.min(currPage + 1, imageNms.length - 1)
+                ? Math.min(currPage + 1, images.length - 1)
                 : Math.max(currPage - 1, 0);
 
         // 버튼 활성화/비활성화, 추가 이미지 보임/가림
         const leftHidden = currPage === 0;
-        const rightHidden = currPage === imageNms.length - 1;
+        const rightHidden = currPage === images.length - 1;
         const leftBtnClassList = document.getElementById("leftBtn").classList;
         const rightBtnClassList = document.getElementById("rightBtn").classList;
 
@@ -61,23 +91,8 @@
         const imageSize = currPage === 2 || currPage === 3 ? 'w-4/5' : 'w-3/5';
         const content = document.getElementById("content");
         const subContent = document.getElementById("subContent");
-        content.innerHTML = `<img class="my-2 mr-4 p-4 ${imageSize}" src="/images/${imageNms[currPage]}" alt=${imageNms[currPage]} />`;
-        subContent.innerHTML =
-            currPage === 2 ? `<img class="my-2 mr-4 p-4 w-3/5" src="/images/react-virtual-dom.png" alt="React virtual DOM" />`
-                : currPage === 3 ? `<img class="my-2 mr-4 p-4 w-2/5" src="/images/rsc.png" alt="React Server Component" />`
-                : currPage === 5 ? `
-                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(0)">자바스크립트 상태 보고서</button>
-                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(1)">웹페이지 로딩 시간 보고서</button>
-                        <div class="w-full">
-                            <p>Hydrate가 최선이나 만능 아님</p>
-                            <p class="text-sm">- Gmail 사례 > 가장 뛰어난 MPA보다 가장 뛰어난 SPA가 더 좋다.</p>
-                            <ul>
-                               <li>서비스 기획 시 기술 스택 결정: 서비스 규모, 서비스 대상이 위치한 지역의 통신 인프라 환경, 평균 기기 성능 고려</li>
-                               <li>서비스 특징에 따라, 옛 기술 스택 구성이 오히려 더 나을 수 있다.</li>
-                           </ul>
-                        </div>
-                    `
-                :'';
+        content.innerHTML = `<img class="my-2 mr-4 p-4 ${imageSize}" src="/images/${images[currPage].main}" alt=${images[currPage].main} />`;
+        subContent.innerHTML = images[currPage].sub ?? '';
     }
 </script>
 </body>
