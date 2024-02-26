@@ -27,16 +27,21 @@
     <button id="rightBtn" class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="toggleVDomImage('right')">></button>
 </div>
 <div class="m-4 p-4">
-    <div id="subContent" class="w-full flex justify-center"></div>
+    <div id="subContent" class="w-full flex flex-wrap justify-center gap-2"></div>
 </div>
 <script>
     const url = window.location.href;
     document.getElementById("url").innerHTML = url;
     let currPage = 0;
 
-    const imageNms = ['spa-mpa-lifecycle.jpg', 'mpa.png', 'spa.png', 'hydrate.png', 'ssr_vs_csr.png'];
+    const openReport = (idx) => {
+        const target = ['state-of-javascript', 'loading-speed'];
+        window.open(`https://httparchive.org/reports/${target[idx]}?start=earliest&end=latest&view=list`, 'jsReport', 'width=1200, height=800');
+    }
 
     const toggleVDomImage = (direction) => {
+        const imageNms = ['spa-mpa-lifecycle.jpg', 'mpa.png', 'spa.png', 'hydrate.png', 'ssr_vs_csr.png', 'dev_trend.png'];
+
         // currPage 업데이트
         currPage =
             direction === 'right'
@@ -59,7 +64,20 @@
         content.innerHTML = `<img class="my-2 mr-4 p-4 ${imageSize}" src="/images/${imageNms[currPage]}" alt=${imageNms[currPage]} />`;
         subContent.innerHTML =
             currPage === 2 ? `<img class="my-2 mr-4 p-4 w-3/5" src="/images/react-virtual-dom.png" alt="React virtual DOM" />`
-                : currPage === 3 ? `<img class="my-2 mr-4 p-4 w-2/5" src="/images/rsc.png" alt="React Server Component" />` : '';
+                : currPage === 3 ? `<img class="my-2 mr-4 p-4 w-2/5" src="/images/rsc.png" alt="React Server Component" />`
+                : currPage === 5 ? `
+                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(0)">자바스크립트 상태 보고서</button>
+                        <button class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="openReport(1)">웹페이지 로딩 시간 보고서</button>
+                        <div class="w-full">
+                            <p>Hydrate가 최선이나 만능 아님</p>
+                            <p class="text-sm">- Gmail 사례 > 가장 뛰어난 MPA보다 가장 뛰어난 SPA가 더 좋다.</p>
+                            <ul>
+                               <li>서비스 기획 시 기술 스택 결정: 서비스 규모, 서비스 대상이 위치한 지역의 통신 인프라 환경, 평균 기기 성능 고려</li>
+                               <li>서비스 특징에 따라, 옛 기술 스택 구성이 오히려 더 나을 수 있다.</li>
+                           </ul>
+                        </div>
+                    `
+                :'';
     }
 </script>
 </body>
