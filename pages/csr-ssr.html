@@ -26,6 +26,9 @@
     <button id="leftBtn" class="hidden p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="toggleVDomImage('left')"><</button>
     <button id="rightBtn" class="p-2 rounded-md border hover:bg-teal-300 hover:font-bold" onclick="toggleVDomImage('right')">></button>
 </div>
+<div class="m-4 p-4">
+    <div id="subContent" class="w-full flex justify-center"></div>
+</div>
 <script>
     const url = window.location.href;
     document.getElementById("url").innerHTML = url;
@@ -40,17 +43,23 @@
                 ? Math.min(currPage + 1, imageNms.length - 1)
                 : Math.max(currPage - 1, 0);
 
-        // 버튼 활성화/비활성화
+        // 버튼 활성화/비활성화, 추가 이미지 보임/가림
         const leftHidden = currPage === 0;
         const rightHidden = currPage === imageNms.length - 1;
+        const leftBtnClassList = document.getElementById("leftBtn").classList;
+        const rightBtnClassList = document.getElementById("rightBtn").classList;
 
-        document.getElementById("leftBtn").classList.toggle('hidden', leftHidden);
-        document.getElementById("rightBtn").classList.toggle('hidden', rightHidden);
+        leftBtnClassList.toggle('hidden', leftHidden);
+        rightBtnClassList.toggle('hidden', rightHidden);
 
         // 이미지 출력
         const imageSize = currPage === 2 || currPage === 3 ? 'w-4/5' : 'w-3/5';
         const content = document.getElementById("content");
+        const subContent = document.getElementById("subContent");
         content.innerHTML = `<img class="my-2 mr-4 p-4 ${imageSize}" src="/images/${imageNms[currPage]}" alt=${imageNms[currPage]} />`;
+        subContent.innerHTML =
+            currPage === 2 ? `<img class="my-2 mr-4 p-4 w-3/5" src="/images/react-virtual-dom.png" alt="React virtual DOM" />`
+                : currPage === 3 ? `<img class="my-2 mr-4 p-4 w-2/5" src="/images/rsc.png" alt="React Server Component" />` : '';
     }
 </script>
 </body>

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import nunjucks from 'nunjucks';
 import indexRouter from './routes/index.cjs';
 import viewRouter from './routes/view.cjs';
+import opn from "opn";
 
 dotenv.config();
 const app = express();
@@ -44,6 +45,7 @@ app.use((err, req, res) => {
     res.render('error');
 });
 
-app.listen(app.get('port'), () => {
-    console.log(`${app.get('port')}번 포트에서 응답 대기 중`)
+app.listen(app.get('port'), async () => {
+    console.log(`${app.get('port')}번 포트에서 응답 대기 중`);
+    await opn(`http://localhost:${app.get('port')}`);
 });
