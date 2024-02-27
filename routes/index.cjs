@@ -21,10 +21,6 @@ router.get('/dynamic', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/dynamic-page.html'));
 });
 
-router.get('/spa', (req, res) => {
-    res.sendFile(path.join(__dirname, '../pages/spa-index.html'));
-});
-
 router.get('/csr-ssr', (req, res) => {
     res.sendFile(path.join(__dirname, '../pages/csr-ssr.html'));
 });

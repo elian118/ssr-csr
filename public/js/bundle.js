@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <br>
             <br>
 
-            <h1 class="my-2">* 아래 버튼들은 script 태그 안에 작성된 JS 코드로 동작합니다.</h1>
+            <h1 class="my-2">* 아래 버튼들은 클라이언트로 내려받은 bundle.JS 파일 코드로 동작합니다.</h1>
             <div class="flex flex-wrap gap-2">
                 <button class="p-2 bg-amber-300 rounded-md text-lg font-bold" onclick="showWarning()">경고 띄우기</button>
                 <button id="toggle-button" class="p-2 border rounded-md text-lg font-bold" onclick="toggleColor()">배경색 토글</button>
@@ -76,7 +76,7 @@ const toggle = () => {
     } else {
         // div 요소 생성
         const div = document.createElement("div");
-        console.log(div);
+
         div.id = "myDiv";
         div.innerHTML = `
                 <div class="flex items-center gap-2">
