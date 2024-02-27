@@ -11,7 +11,8 @@ router.get('/template', async (req, res) => {
     const { page } = req.query;
     const response = await axios.get(`${API_URL}`);
     const data = await response.data[page ?? 0];
-
+    // 렌더링을 1초 뒤에 진행하도록 딜레이 추가
+    // await new Promise((res) => setTimeout(res, 1000));
     res.render('index', {
         title: '템플릿 엔진',
         engine: '넌적스(Nunjucks)',
