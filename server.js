@@ -9,7 +9,7 @@ import opn from "opn";
 dotenv.config();
 const app = express();
 
-app.set('port', process.env.PORT || 5000);
+app.set('port', process.env.PORT || 4000);
 app.set('view engine', 'html');
 
 nunjucks.configure('views', {
