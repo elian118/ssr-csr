@@ -1,6 +1,7 @@
 {
   "name": "ssr-csr",
   "version": "1.0.0",
+  "description": "Project to explain SSR and CSR concepts and present web application development trends based on modern Hydrate rendering strategy.",
   "main": "server.js",
   "repository": "https://github.com/elian118/ssr-csr.git",
   "author": "김광회 <postelian@gmail.com>",
